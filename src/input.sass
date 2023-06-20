@@ -1,0 +1,59 @@
+
+
+$mobileWidth: 375px
+$desktopWidth: 1366px
+
+// colors
+
+//primary
+
+// - Scissors Gradient: hsl(39, 89%, 49%) to hsl(40, 84%, 53%)
+// - Paper Gradient: hsl(230, 89%, 62%) to hsl(230, 89%, 65%)
+// - Rock Gradient: hsl(349, 71%, 52%) to hsl(349, 70%, 56%)
+// - Lizard Gradient: hsl(261, 73%, 60%) to hsl(261, 72%, 63%)
+// - Cyan: hsl(189, 59%, 53%) to hsl(189, 58%, 57%)
+
+//neutral
+
+$darkText: hsl(229, 25%, 31%)
+$scoreText: hsl(229, 64%, 46%)
+$headerOutline: hsl(217, 16%, 45%)
+$backLight: #fafafa
+$backDark: #0b1121
+$boxShadow: #c0c1d0
+
+//background
+
+@mixin gradient 
+    background: radial-gradient(circle, hsl(214, 47%, 23%) 0%, hsl(237, 49%, 15%) 47%) 
+
+@mixin center
+    display: flex
+    justify-content: center
+    align-items: center
+
+
+//- Radial Gradient: hsl(214, 47%, 23%) to hsl(237, 49%, 15%)
+
+// ## Fonts
+
+// - Family: [Barlow Semi Condensed](https://fonts.google.com/specimen/Barlow+Semi+Condensed)
+// - Weights: 600, 700
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&display=swap')
+
+
+body 
+    margin: 0
+    background: radial-gradient( hsl(214, 47%, 23%), hsl(237, 49%, 15%))
+
+    #app
+        width: 100%
+        height: 100vh
+
+        p, li, h1, h2, a, ul
+            padding: 0
+            margin: 0
+            font-family: 'Barlow Semi Condensed', sans-serif
+            text-decoration: none
+            list-style-type: none

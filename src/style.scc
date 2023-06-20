@@ -1,0 +1,11 @@
+#app {
+  width: 100%;
+}
+#app p, #app li, #app h1, #app h2, #app a, #app ul {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style-type: none;
+}
+
+/*# sourceMappingURL=style.scc.map */
