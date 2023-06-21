@@ -8,6 +8,7 @@
     })
 
     function defineFiguresSet(mode) {
+        console.log(mode)
         if(mode==='advanced') return figuresAdvanced
         return figuresSimple
     }
@@ -33,7 +34,7 @@
 </template>
 
 <style scoped lang="sass">
-    @import '../input.sass'
+    @import '../input.sass' 
 
     .selection-wrapper
         @include center
@@ -44,11 +45,18 @@
         margin-top: 100px
         box-sizing: border-box
 
+        @media screen and (max-width: 520px)
+            width: 90%
+            height: auto
+
         .back-overlay
             position: absolute
             width: 90%
             top: 40px
             z-index: -1
+
+            @media screen and (max-width: 520px)
+                width: 100%
         
         ul
             width: 100%
@@ -62,6 +70,8 @@
                 grid-column-start: 1
                 grid-column-end: 3
                 justify-self: center
+                @media screen and (max-width: 520px)
+                    width: 30%
             li:nth-child(2)
                 grid-row-start: v-bind('props.selectionStyles.rows.start2')
                 grid-row-end: v-bind('props.selectionStyles.rows.end2')
@@ -84,9 +94,18 @@
                 height: 150px
                 border-radius: 75px
 
+                @media screen and (max-width: 520px)
+                    width: 60%
+                    aspect-ratio: 1/1
+                    height: auto
+                    border-radius: 50%
+
+                    img
+                        width: 50%
+
                 &:hover
                     cursor: pointer
-                    animation: linear 0.5s infinite pulse
+                    animation: linear 0.8s infinite pulse
 
                     @keyframes pulse
                         0%
@@ -103,5 +122,11 @@
                     border-radius: 57px
                     background-color: $backLight
                     box-shadow: inset 0px 5px $boxShadow
+
+                    @media screen and (max-width: 520px)
+                        width: 80%
+                        aspect-ratio: 1/1
+                        height: auto
+                        border-radius: 50%
 
 </style>

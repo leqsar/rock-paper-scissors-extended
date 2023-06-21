@@ -40,6 +40,11 @@ function defineImg(mode) {
     border-radius: 10px
     border: 2px solid $headerOutline
 
+    @media screen and (max-width: 720px) 
+      width: 90%
+      height: auto
+      padding: 10px 10px
+
     .score-wrapper
       display: flex
       flex-direction: column
@@ -49,6 +54,11 @@ function defineImg(mode) {
       height: 115px
       background-color: $backLight
       border-radius: 10px
+      
+      @media screen and (max-width: 500px) 
+        width: 40%
+        height: auto
+        aspect-ratio: 5/4
 
       p:first-of-type
         color: $scoreText
@@ -63,5 +73,10 @@ function defineImg(mode) {
           size: 60px
           weight: 700
         line-height: 60px
+
+    img 
+      @media screen and (max-width: 500px) 
+          min-width: 70px
+          width: 40%
 
 </style>

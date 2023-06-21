@@ -88,7 +88,6 @@
     </div>
     <div class="pc-choice-wrapper">
         <p>the house picked</p>
-        <div class="house-preview"></div>
         <div
             v-if="pcChoice" 
             :style="pcChoice.backStyle" 
@@ -113,11 +112,23 @@
     margin: 0 auto
     margin-top: 100px
 
+    @media screen and (max-width: 920px) 
+        width: 90%
+
+    @media screen and (max-width: 920px) 
+        width: 96%
+
     & > div
         display: flex
         flex-direction: column
         align-items: center
         width: 300px
+
+        @media screen and (max-width: 920px) 
+            width: 33%
+
+        @media screen and (max-width: 500px)
+            width: 50%
 
         & > p
             width: 100%
@@ -130,6 +141,14 @@
             color: $backLight
             letter-spacing: 2px
 
+            @media screen and (max-width: 920px) 
+                height: 60px
+
+            @media screen and (max-width: 920px) 
+                font-size: 18px
+                letter-spacing: 1px
+                height: 30px
+
         .figure, .house-figure
             @include center
             position: relative
@@ -139,6 +158,16 @@
             border-radius: 145px
             transition: all 0.2s
 
+            @media screen and (max-width: 920px) 
+                width: 100%
+                aspect-ratio: 1/1
+                height: auto
+                border-radius: 50%
+            
+            @media screen and (max-width: 500px)
+                width: 80%
+                margin-top: 30px
+
             .image-wrapper
                 @include center
                 width: 200px
@@ -147,8 +176,18 @@
                 background-color: $backLight
                 box-shadow: inset 0px 6px $boxShadow
 
+                @media screen and (max-width: 920px) 
+                    width: 70%
+                    aspect-ratio: 1/1
+                    height: auto
+                    border-radius: 50%
+                    
+
                 img
                     width: 100px
+
+                    @media screen and (max-width: 920px) 
+                        width: 50%
         .winner
 
             &::after
@@ -173,17 +212,6 @@
                     100%
                         transform: scale(1.9)
                         opacity: 0
-                
-
-        .house-preview
-            position: absolute
-            width: 200px
-            height: 200px
-            margin-top: 120px
-            border-radius: 100px
-            background-color: $backDark
-            opacity: 0.6
-            z-index: -1
 
     .result-wrapper
         display: flex
@@ -192,20 +220,36 @@
         width: 300px
         margin: 100px 50px
 
+        @media screen and (max-width: 700px)
+            position: absolute
+            top: 300px
+
+        @media screen and (max-width: 500px)
+            top: 150px
         p
             font: 
                 size: 55px
                 weight: 700 
 
+            @media screen and (max-width: 700px)
+                font-size: 40px
+
+            @media screen and (max-width: 500px)
+                font-size: 30px
+
         button
             width: 220px
             height: 55px
+            margin-top: 20px !important
             color: $darkText
             text-transform: uppercase
             font-size: 20px
             letter-spacing: 2px
             border-radius: 10px
             background-color: $backLight
+
+            @media screen and (max-width: 500px)
+                margin-top: 0 !important
 
             &:hover
                 cursor: pointer

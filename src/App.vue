@@ -82,7 +82,7 @@
       @change-score="changeScore"
     />
   </div>
-  <Rules v-show="rulesAreOpen" @hide-rules="hideRules"/>
+  <Rules v-show="rulesAreOpen" @hide-rules="hideRules" :mode="mode"/>
   <p @click="switchRules" class="rules-heading">rules</p>
   <div @click="switchMode" class="mode-switcher-wrapper">
     <p>Advanced</p>
@@ -101,6 +101,8 @@
     width: min(100%, 1366px)
     margin: 0 auto
     padding-top: 30px
+    padding-bottom: 120px 
+    box-sizing: content-box
 
   .rules-heading,
   .mode-switcher
@@ -122,14 +124,23 @@
     &:hover
       cursor: pointer
 
-  .rules-heading:hover
-    background-color: $backLight
-    color: $darkText
-    transform: scale(1.1)
-    transition: all 0.2s
+  .rules-heading
+
+    @media screen and (max-width: 500px) 
+      width: 50%
+      left: 25%
+      bottom: 0px
+      position: absolute
+    
+    &:hover
+      background-color: $backLight
+      color: $darkText
+      transform: scale(1.1)
+      transition: all 0.2s
 
   .mode-switcher-wrapper
     @include center
+    height: 80px
     position: fixed
     gap: 10px
     bottom: 20px
@@ -137,6 +148,11 @@
     color: $backLight
     font-size: 22px
 
+    @media screen and (max-width: 500px) 
+      width: 100%
+      top: 170px
+      position: absolute
+      
     p
       text-transform: uppercase
 

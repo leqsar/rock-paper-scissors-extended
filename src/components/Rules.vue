@@ -1,6 +1,10 @@
 <script setup>
     const emit = defineEmits(['hideRules'])
 
+    const props = defineProps({
+        mode: String
+    })
+
     function hideRules() {
         emit('hideRules')
     }
@@ -13,7 +17,8 @@
             <p>rules</p>
             <img src="../assets/images/icon-close.svg" alt="Cross icon" @click="hideRules">
         </header>
-        <img src="../assets/images/image-rules-bonus.svg" alt="Rules">
+        <img v-if="props.mode === 'advanced'" src="../assets/images/image-rules-bonus.svg" alt="Rules">
+        <img v-if="props.mode === 'simple'" src="../assets/images/image-rules.svg" alt="Rules">
     </div>
   </div>
 </template>
