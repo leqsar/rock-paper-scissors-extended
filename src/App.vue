@@ -1,15 +1,28 @@
 <script setup>
-  import { ref, vModelText } from "vue";
+  import { ref } from "vue";
+  import { advancedStyles, simpleStyles } from "./figures";
   import Score from "./components/Score.vue";
   import SelectionPage from "./components/SelectionPage.vue";
   import GamePage from "./components/GamePage.vue";
   import Rules from "./components/Rules.vue";
+  import triangle from './assets/images/bg-triangle.svg'
+  import pentagon from './assets/images/bg-pentagon.svg'
 
-  const score = ref(0);
-  const userChoice = ref('');
-  const gameStage = ref('selection');
+  const score = ref(0)
+  const userChoice = ref('')
+  const gameStage = ref('selection')
   const rulesAreOpen = ref(false)
   const mode = ref('advanced')
+  const styles = ref(advancedStyles)
+  const selectionStyles = ref({
+    backSrc: pentagon,
+    rows: {
+      start1: 1,
+      end1: 2,
+      start2: 2,
+      end2: 3
+    }
+  })
 
   function setUserChoice(figure) {
     userChoice.value = figure
@@ -35,6 +48,19 @@
 
   function switchMode() {
     mode.value = mode.value==='simple' ? 'advanced' : 'simple'
+    styles.value = mode.value==='simple' ? simpleStyles : advancedStyles
+    selectionStyles.value.backSrc = mode.value==='simple' ? triangle : pentagon
+    selectionStyles.value.rows = mode.value==='simple' ? {
+      start1: 3,
+      end1: 4,
+      start2: 1,
+      end2: 2
+    } : {
+      start1: 1,
+      end1: 2,
+      start2: 2,
+      end2: 3
+    }
   }
 
 </script>
@@ -44,18 +70,27 @@
     <Score :score="score" :mode="mode"/>
     <SelectionPage 
       v-if="gameStage==='selection'"
-      @user-select="setUserChoice" 
+      :selectionStyles="selectionStyles"
+      :mode="mode"
+      @user-select="setUserChoice"
     />
     <GamePage 
       v-if="gameStage==='game'" 
       :choice="userChoice"
+      :mode="mode"
       @go-back="restartGame"
       @change-score="changeScore"
     />
   </div>
   <Rules v-show="rulesAreOpen" @hide-rules="hideRules"/>
   <p @click="switchRules" class="rules-heading">rules</p>
-  <p @click="switchMode" class="mode-switcher">{{ mode }}</p>
+  <div @click="switchMode" class="mode-switcher-wrapper">
+    <p>Advanced</p>
+    <div class="switcher-wrapper">
+      <div class="switcher" :style="styles"></div>
+    </div>
+    <p>Simple</p>
+  </div>
 </template>
 
 <style scoped lang="sass">
@@ -87,10 +122,46 @@
     &:hover
       cursor: pointer
 
-  .mode-switcher
+  .mode-switcher-wrapper
     @include center
     position: fixed
+    gap: 10px
     bottom: 20px
     left: 20px
+    color: $backLight
+    font-size: 22px
+
+    .switcher-wrapper
+      display: flex
+      align-items: center
+      position: relative
+      width: 60px
+      height: 30px
+      padding: 2px 3px
+      box-sizing: border-box
+      border-radius: 15px
+      border: 2px solid $headerOutline
+
+      &:hover
+        cursor: pointer
+
+      .switcher
+        position: absolute
+        width: 24px
+        height: 24px
+        border-radius: 12px
+        background-color: $backLight
+        transition: all 0.5s
+
+        &::after
+          position: absolute
+          left: 3px
+          top: 3px
+          content: ''
+          width: 18px
+          height: 18px
+          border-radius: 9px
+          background-color: $backLight
+
   
 </style>

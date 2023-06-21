@@ -1,15 +1,25 @@
 <script setup>
-    import { ref } from "vue";
     import {figuresAdvanced} from '../figures.js'
+    import {figuresSimple} from '../figures.js'
 
-    const score = ref(0);
+    const props = defineProps({
+        mode: String,
+        selectionStyles: Object
+    })
+
+    function defineFiguresSet(mode) {
+        if(mode==='advanced') return figuresAdvanced
+        return figuresSimple
+    }
+
 </script>
 
 <template>
   <div class="selection-wrapper">
+    <img :src="props.selectionStyles.backSrc" alt="Triangle" class="back-overlay">
     <ul>
         <li 
-            v-for="figure in figuresAdvanced" 
+            v-for="figure in defineFiguresSet(props.mode)" 
             @click="$emit('userSelect', figure.name)" 
             class="figure"
             :style="figure.backStyle"
@@ -27,15 +37,18 @@
 
     .selection-wrapper
         @include center
+        position: relative
         width: 500px
         height: 500px
         margin: 0 auto
         margin-top: 100px
         box-sizing: border-box
-        background: 
-            image: url('../assets/images/bg-pentagon.svg')
-            repeat: no-repeat
-            position: center
+
+        .back-overlay
+            position: absolute
+            width: 90%
+            top: 40px
+            z-index: -1
         
         ul
             width: 100%
@@ -44,18 +57,18 @@
             row-gap: 30px
             
             li:nth-child(1)
-                grid-row-start: 1
-                grid-row-end: 2
+                grid-row-start: v-bind('props.selectionStyles.rows.start1')
+                grid-row-end: v-bind('props.selectionStyles.rows.end1')
                 grid-column-start: 1
                 grid-column-end: 3
                 justify-self: center
             li:nth-child(2)
-                grid-row-start: 2
-                grid-row-end: 3
+                grid-row-start: v-bind('props.selectionStyles.rows.start2')
+                grid-row-end: v-bind('props.selectionStyles.rows.end2')
                 justify-self: start
             li:nth-child(3)
-                grid-row-start: 2
-                grid-row-end: 3
+                grid-row-start: v-bind('props.selectionStyles.rows.start2')
+                grid-row-end: v-bind('props.selectionStyles.rows.end2')
                 justify-self: end
             li:nth-child(4)
                 grid-row-start: 3

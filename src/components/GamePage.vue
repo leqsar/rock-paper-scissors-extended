@@ -1,21 +1,32 @@
 <script setup>
     import {onMounted, ref, watch} from 'vue'
     import {figuresAdvanced} from '../figures.js'
+    import {figuresSimple} from '../figures.js'
 
     const pcChoice = ref();
     const isGameFinished = ref(false)
     const gameResult=ref()
 
     const props = defineProps({
-        choice: String
+        choice: String,
+        mode: String,
     })
 
     const emit = defineEmits(['goBack', 'changeScore'])
 
     onMounted(() => {
+        let currentFigureSet;
+        let maxIndex;
+        if(props.mode==='advanced') {
+            currentFigureSet = figuresAdvanced
+            maxIndex=4
+        } else {
+            currentFigureSet = figuresSimple
+            maxIndex=2
+        }
         let timerId = setInterval(() => {
-            const pcChoiceIndex = randomInteger(0, 4);
-            pcChoice.value = figuresAdvanced[pcChoiceIndex]
+            const pcChoiceIndex = randomInteger(0, maxIndex);
+            pcChoice.value = currentFigureSet[pcChoiceIndex]
         }, 100);
         setTimeout(() => {
             clearInterval(timerId)
