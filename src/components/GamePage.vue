@@ -36,8 +36,10 @@
 
     watch(isGameFinished, (newStatus) => {
         if(newStatus) {
-            determineWinner(findChosenFigure(), pcChoice.value)
-            emit('changeScore', gameResult.value)
+            setTimeout(() => {
+                determineWinner(findChosenFigure(), pcChoice.value)
+                emit('changeScore', gameResult.value)
+            }, 500)
         }
     })
 
@@ -135,6 +137,7 @@
             height: 290px
             margin-top: 70px
             border-radius: 145px
+            transition: all 0.2s
 
             .image-wrapper
                 @include center
