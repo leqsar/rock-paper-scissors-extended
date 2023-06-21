@@ -6,6 +6,16 @@
         choice: String
     })
 
+    const pcChoice = ref();
+
+    onMounted(() => {
+        let timerId = setInterval(() => {
+            const pcChoiceIndex = randomInteger(0, 4);
+            pcChoice.value = figures[pcChoiceIndex]
+        }, 100);
+        setTimeout(() => clearInterval(timerId), 800);
+    })
+
     function findChosenFigure() {
         return figures.filter(figure => figure.name===props.choice)[0]
     }
@@ -29,8 +39,10 @@
     <div class="pc-choice-wrapper">
         <p>the house picked</p>
         <div class="house-preview"></div>
-        <div class="house-figure" :style="pcChoice.value.backStyle">
-            <img :src="pcChoice.value.imgSrc" :alt="pcChoice.value.name">
+        <div class="house-figure" v-if="pcChoice" :style="pcChoice.backStyle">
+            <div class="image-wrapper">
+                <img :src="pcChoice.imgSrc" :alt="pcChoice.name">
+            </div>
         </div>
     </div>
   </div>
@@ -40,6 +52,7 @@
   @import '../input.sass'
 
   .game-page-wrapper
+    position: relative
     display: flex
     justify-content: space-between
     width: 700px
@@ -63,7 +76,7 @@
             color: $backLight
             letter-spacing: 2px
 
-        .figure
+        .figure, .house-figure
             @include center
             width: 290px
             height: 290px
@@ -82,12 +95,16 @@
                     width: 100px
 
         .house-preview
+            position: absolute
             width: 200px
             height: 200px
             margin-top: 120px
             border-radius: 100px
             background-color: $backDark
             opacity: 0.6
+            z-index: -1
+
+        
 
   
 </style>
