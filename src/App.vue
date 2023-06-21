@@ -122,6 +122,12 @@
     &:hover
       cursor: pointer
 
+  .rules-heading:hover
+    background-color: $backLight
+    color: $darkText
+    transform: scale(1.1)
+    transition: all 0.2s
+
   .mode-switcher-wrapper
     @include center
     position: fixed
@@ -130,6 +136,9 @@
     left: 20px
     color: $backLight
     font-size: 22px
+
+    p
+      text-transform: uppercase
 
     .switcher-wrapper
       display: flex
