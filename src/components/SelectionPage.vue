@@ -1,6 +1,6 @@
 <script setup>
     import { ref } from "vue";
-    import {figures} from '../figures.js'
+    import {figuresAdvanced} from '../figures.js'
 
     const score = ref(0);
 </script>
@@ -9,7 +9,7 @@
   <div class="selection-wrapper">
     <ul>
         <li 
-            v-for="figure in figures" 
+            v-for="figure in figuresAdvanced" 
             @click="$emit('userSelect', figure.name)" 
             class="figure"
             :style="figure.backStyle"

@@ -1,23 +1,53 @@
 <script setup>
-    import {onMounted, ref} from 'vue'
-    import {figures} from '../figures.js'
+    import {onMounted, ref, watch} from 'vue'
+    import {figuresAdvanced} from '../figures.js'
+
+    const pcChoice = ref();
+    const isGameFinished = ref(false)
+    const gameResult=ref()
 
     const props = defineProps({
         choice: String
     })
 
-    const pcChoice = ref();
+    const emit = defineEmits(['goBack', 'changeScore'])
 
     onMounted(() => {
         let timerId = setInterval(() => {
             const pcChoiceIndex = randomInteger(0, 4);
-            pcChoice.value = figures[pcChoiceIndex]
+            pcChoice.value = figuresAdvanced[pcChoiceIndex]
         }, 100);
-        setTimeout(() => clearInterval(timerId), 800);
+        setTimeout(() => {
+            clearInterval(timerId)
+            isGameFinished.value = true
+        }, 800);
     })
 
+    watch(isGameFinished, (newStatus) => {
+        if(newStatus) {
+            determineWinner(findChosenFigure(), pcChoice.value)
+            emit('changeScore', gameResult.value)
+        }
+    })
+
+    function goBack() {
+        emit('goBack')
+    }
+
+    function determineWinner(userChoice, pcChoice) {
+        const userFigure = userChoice.name;
+        const pcFigure = pcChoice.name;
+        if(userFigure === pcFigure) {
+            gameResult.value = 'draw'
+        } else if(userChoice.winCondition.indexOf(pcFigure) !== -1) {
+            gameResult.value = 'you won'
+        } else {
+            gameResult.value = 'you lost'
+        }
+    }
+
     function findChosenFigure() {
-        return figures.filter(figure => figure.name===props.choice)[0]
+        return figuresAdvanced.filter(figure => figure.name===props.choice)[0]
     }
 
     function randomInteger(min, max) {
@@ -30,16 +60,27 @@
   <div class="game-page-wrapper">
     <div class="user-choice-wrapper">
         <p>you picked</p>
-        <div class="figure" :style="findChosenFigure().backStyle">
+        <div 
+            :style="findChosenFigure().backStyle" 
+            :class="[{ winner: gameResult==='you won'}, 'figure']"
+        >
             <div class="image-wrapper">
                 <img :src="findChosenFigure().imgSrc" :alt="findChosenFigure().name">
             </div> 
         </div>
     </div>
+    <div class="result-wrapper" v-show="gameResult">
+        <p>{{ gameResult }}</p>
+        <button @click="goBack">play again</button>
+    </div>
     <div class="pc-choice-wrapper">
         <p>the house picked</p>
         <div class="house-preview"></div>
-        <div class="house-figure" v-if="pcChoice" :style="pcChoice.backStyle">
+        <div
+            v-if="pcChoice" 
+            :style="pcChoice.backStyle" 
+            :class="[{ winner: gameResult==='you lost'}, 'house-figure']"
+        >
             <div class="image-wrapper">
                 <img :src="pcChoice.imgSrc" :alt="pcChoice.name">
             </div>
@@ -54,8 +95,8 @@
   .game-page-wrapper
     position: relative
     display: flex
-    justify-content: space-between
-    width: 700px
+    justify-content: space-evenly
+    width: 900px
     margin: 0 auto
     margin-top: 100px
 
@@ -78,6 +119,7 @@
 
         .figure, .house-figure
             @include center
+            position: relative
             width: 290px
             height: 290px
             margin-top: 70px
@@ -93,6 +135,31 @@
 
                 img
                     width: 100px
+        .winner
+
+            &::after
+                position: absolute
+                content: ''
+                width: 100%
+                height: 100%
+                border-radius: 50%
+                z-index: -1
+                background-color: $boxShadow
+                opacity: 0.2
+                animation: linear 1.5s infinite pulse
+
+                @keyframes pulse 
+                    25%
+                        transform: scale(1.3)
+                    50%
+                        transform: scale(1.5)
+                        opacity: 0.1
+                    75%
+                        transform: scale(1.7)
+                    100%
+                        transform: scale(1.9)
+                        opacity: 0
+                
 
         .house-preview
             position: absolute
@@ -104,7 +171,30 @@
             opacity: 0.6
             z-index: -1
 
-        
+    .result-wrapper
+        display: flex
+        flex-direction: column
+        gap: 20px
+        width: 300px
+        margin: 100px 50px
+
+        p
+            font: 
+                size: 55px
+                weight: 700 
+
+        button
+            width: 220px
+            height: 55px
+            color: $darkText
+            text-transform: uppercase
+            font-size: 20px
+            letter-spacing: 2px
+            border-radius: 10px
+            background-color: $backLight
+
+            &:hover
+                cursor: pointer
 
   
 </style>

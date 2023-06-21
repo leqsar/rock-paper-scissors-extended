@@ -1,15 +1,23 @@
 <script setup>
 import { ref } from 'vue'
+import advancedLogo from '../assets/images/logo-bonus.svg'
+import simpleLogo from '../assets/images/logo.svg'
 
 defineProps({
   score: Number,
+  mode: String,
 })
+
+function defineImg(mode) {
+  if(mode==='advanced') return advancedLogo
+  return simpleLogo
+}
 
 </script>
 
 <template>
   <div class="app-state-wrapper">
-    <img src="../assets/images/logo.svg" alt="Rock, Paper, Scissors">
+    <img :src="defineImg(mode)" alt="Logo">
     <div class="score-wrapper">
       <p>score</p>
       <p class="score">{{ score }}</p>
