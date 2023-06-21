@@ -8,7 +8,6 @@
     })
 
     function defineFiguresSet(mode) {
-        console.log(mode)
         if(mode==='advanced') return figuresAdvanced
         return figuresSimple
     }

@@ -1,5 +1,5 @@
 <script setup>
-  import { ref } from "vue";
+  import { onMounted, ref } from "vue";
   import { advancedStyles, simpleStyles } from "./figures";
   import Score from "./components/Score.vue";
   import SelectionPage from "./components/SelectionPage.vue";
@@ -24,6 +24,11 @@
     }
   })
 
+  onMounted(() => {
+    const savedScore = sessionStorage.getItem("score")
+    if(savedScore) score.value = savedScore
+  })
+
   function setUserChoice(figure) {
     userChoice.value = figure
     gameStage.value = 'game'
@@ -44,6 +49,7 @@
   function changeScore(gameResult) {
     if(gameResult==='you won') score.value++
     if(gameResult==='you lost') score.value--
+    sessionStorage.setItem("score", score.value)
   }
 
   function switchMode() {
